@@ -27,6 +27,7 @@
 
 DataQuebrada quebraData(char data[]);
 
+#pragma region Test_Functions
 /*
 ## função utilizada para testes  ##
 
@@ -76,7 +77,9 @@ int teste(int a)
 
     return val;
 }
+#pragma endregion
 
+#pragma region First_Question
 /*
  Q1 = validar data
 @objetivo
@@ -90,6 +93,7 @@ int teste(int a)
     Não utilizar funções próprias de string (ex: strtok)   
     pode utilizar strlen para pegar o tamanho da string
  */
+
 int q1(char data[])
 {
     int datavalida = 1;
@@ -177,12 +181,12 @@ int q1(char data[])
     else {
         datavalida = 0;
     }
-    
+
     return datavalida;
 }
+#pragma endregion
 
-
-
+#pragma region Second_Question
 /*
  Q2 = diferença entre duas datas
  @objetivo
@@ -222,7 +226,9 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
     }
     
 }
+#pragma endregion
 
+#pragma region Third_Question
 /*
  Q3 = encontrar caracter em texto
  @objetivo
@@ -239,7 +245,9 @@ int q3(char *texto, char c, int isCaseSensitive)
 
     return qtdOcorrencias;
 }
+#pragma endregion
 
+#pragma region Fourth_Question
 /*
  Q4 = encontrar palavra em texto
  @objetivo
@@ -261,7 +269,9 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
     return qtdOcorrencias;
 }
+#pragma endregion
 
+#pragma region Fifth_Question
 /*
  Q5 = inverte número
  @objetivo
@@ -277,7 +287,9 @@ int q5(int num)
 
     return num;
 }
+#pragma endregion
 
+#pragma region Sixth_Question
 /*
  Q6 = ocorrência de um número em outro
  @objetivo
@@ -293,9 +305,7 @@ int q6(int numerobase, int numerobusca)
     int qtdOcorrencias;
     return qtdOcorrencias;
 }
-
-
-
+#pragma endregion
 
 DataQuebrada quebraData(char data[]){
   DataQuebrada dq;
@@ -311,8 +321,8 @@ DataQuebrada quebraData(char data[]){
 		sDia[i] = '\0';  // coloca o barra zero no final
 	}else {
 		dq.valido = 0;
-    return dq;
-  }  
+        return dq;
+    }  
 	
 
 	int j = i + 1; //anda 1 cada para pular a barra
