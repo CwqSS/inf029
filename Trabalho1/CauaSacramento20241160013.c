@@ -100,16 +100,42 @@ int q1(char data[])
     //quebrar a string data em strings sDia, sMes, sAno
     int dia = 0, mes = 0, ano = 0;
 
-    int tamString, base10, qtdCaracteres;
-    for(tamString = 0; data[tamString]; tamString++);
-    tamString -= 1;
+    int tamString, qtdCaracteres;
 
-    base10 = 1;
     qtdCaracteres = 0;
-    for(tamString; data[tamString] != '/'; tamString--) {
+    for(tamString = 0; data[tamString] != '/'; tamString++) {
         if(data[tamString] >= '0' && data[tamString] <= '9') {
-            ano += (data[tamString] - '0') * base10;
-            base10 *= 10;
+            dia =  dia * 10 + data[tamString] - '0';
+            qtdCaracteres = qtdCaracteres + 1;
+        }
+        else {
+            datavalida = 0;
+        }
+    }
+
+    if(qtdCaracteres > 2) {
+        datavalida = 0;
+    }
+
+    qtdCaracteres = 0;
+    for(tamString = tamString + 1; data[tamString] != '/' && datavalida; tamString++) {
+        if(data[tamString] >= '0' && data[tamString] <= '9') {
+            mes = mes * 10 + data[tamString] - '0';
+            qtdCaracteres = qtdCaracteres + 1;
+        }
+        else {
+            datavalida = 0;
+        }
+    }
+    
+    if(qtdCaracteres > 2) {
+        datavalida = 0;
+    }
+
+    qtdCaracteres = 0;
+    for(tamString = tamString + 1; data[tamString] && datavalida; tamString++) {
+        if(data[tamString] >= '0' && data[tamString] <= '9') {
+            ano = ano * 10 + data[tamString] - '0';
             qtdCaracteres = qtdCaracteres + 1;
         }
         else {
@@ -121,41 +147,6 @@ int q1(char data[])
         ano += 2000;
     }
     else if(qtdCaracteres != 4) {
-        datavalida = 0;
-    }
-
-    base10 = 1;
-    qtdCaracteres = 0;
-    for(tamString = tamString - 1; data[tamString] != '/' && datavalida; tamString--) {
-        if(data[tamString] >= '0' && data[tamString] <= '9') {
-            mes += (data[tamString] - '0') * base10;
-            base10 *= 10;
-            qtdCaracteres = qtdCaracteres + 1;
-        }
-        else {
-            datavalida = 0;
-        }
-    }
-
-
-    if(qtdCaracteres > 2) {
-        datavalida = 0;
-    }
-
-    base10 = 1;
-    qtdCaracteres = 0;
-    for(tamString = tamString - 1; tamString > -1 && datavalida; tamString--) {
-        if(data[tamString] >= '0' && data[tamString] <= '9') {
-            dia += (data[tamString] - '0') * base10;
-            base10 *= 10;
-            qtdCaracteres = qtdCaracteres + 1;
-        }
-        else {
-            datavalida = 0;
-        }
-    }
-    
-    if(qtdCaracteres > 2) {
         datavalida = 0;
     }
 
@@ -203,26 +194,27 @@ int q1(char data[])
  */
 DiasMesesAnos q2(char datainicial[], char datafinal[])
 {
-
     //calcule os dados e armazene nas três variáveis a seguir
     DiasMesesAnos dma;
 
-    if (q1(datainicial) == 0){
-      dma.retorno = 2;
-      return dma;
-    }else if (q1(datafinal) == 0){
-      dma.retorno = 3;
-      return dma;
-    }else{
-      //verifique se a data final não é menor que a data inicial
-      
-      //calcule a distancia entre as datas
+    if (q1(datainicial) == 0) {
+        dma.retorno = 2;
+        return dma;
+    }
+    else if (q1(datafinal) == 0) {
+        dma.retorno = 3;
+        return dma;
+    } 
+    else {
+        //verifique se a data final não é menor que a data inicial
+        
+        
+        //calcule a distancia entre as datas
 
 
-      //se tudo der certo
-      dma.retorno = 1;
-      return dma;
-      
+        //se tudo der certo
+        dma.retorno = 1;
+        return dma;
     }
     
 }
