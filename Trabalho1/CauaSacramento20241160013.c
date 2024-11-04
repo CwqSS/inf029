@@ -207,10 +207,124 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
     } 
     else {
         //verifique se a data final não é menor que a data inicial
+        int diaI = 0, mesI = 0, anoI = 0, totalDiasI = 0;
+        int diaF = 0, mesF = 0, anoF = 0, totalDiasF = 0;
+        int i, j, qtdCaracteres, ehAnoBissexto;
+
+        for(i = 0; datainicial[i] != '/'; i++) {
+            diaI = diaI * 10 + datainicial[i] - '0';
+        }
+        i += 1;
+
+        for(i; datainicial[i] != '/'; i++) {
+            mesI = mesI * 10 + datainicial[i] - '0';
+        }
+        i += 1;
+
+        qtdCaracteres = 0;
+        for(i; datainicial[i]; i++) {
+            anoI = anoI * 10 + datainicial[i] - '0';
+        }
+
+        if(qtdCaracteres == 2)
+            anoI += 2000;
+
+        for(i = 0; datafinal[i] != '/'; i++) {
+            diaF = diaF * 10 + datafinal[i] - '0';
+        }
+        i += 1;
+
+        for(i; datafinal[i] != '/'; i++) {
+            mesF = mesF * 10 + datafinal[i] - '0';
+        }
+        i += 1;
+
+        qtdCaracteres = 0;
+        for(i; datafinal[i]; i++) {
+            anoF = anoF * 10 + datafinal[i] - '0';
+            qtdCaracteres += 1;
+        }
         
+        if(qtdCaracteres == 2) 
+            anoF += 2000;
+        
+        if((anoI > anoF) || (anoI == anoF && mesI > mesF) || (anoI == anoF && mesI == mesF && diaI > diaF)) {
+            dma.retorno = 4;
+            return dma;
+        }
+
+        // Lógica para cálculo de total de dias
+        for(i = 0; i < anoI; i++) {
+            int qtdDias = 365; 
+            if(i % 4 == 0) {
+                if(i % 100 != 0 || i % 400 == 0) {
+                    qtdDias = 366;
+                }
+            }
+            totalDiasI += qtdDias;
+        }
+
+        ehAnoBissexto = 0;
+        if(anoI % 4 == 0) {
+            if(anoI % 100 != 0 || anoI % 400 == 0) {
+                ehAnoBissexto = 1;
+            }
+        }
+
+        for(j = 0; j < mesI; j++) {
+            int qtdDias = 31;
+            if(j == 4 || j == 6 || j == 9 || j == 11)
+                qtdDias = 30;
+            else if(mesI == 2) {
+                qtdDias = 28;
+                if(ehAnoBissexto)
+                    qtdDias = 29;
+            }
+            totalDiasI += qtdDias;
+        }
+
+        totalDiasI += diaI;
+
+        // Lógica para cálculo de total de dias
+        for(i = 0; i < anoF; i++) {
+            int qtdDias = 365; 
+            if(i % 4 == 0) {
+                if(i % 100 != 0 || i % 400 == 0) {
+                    qtdDias = 366;
+                }
+            }
+            totalDiasF += qtdDias;
+        }
+
+        ehAnoBissexto = 0;
+        if(anoF % 4 == 0) {
+            if(anoF % 100 != 0 || anoF % 400 == 0) {
+                ehAnoBissexto = 1;
+            }
+        }
+
+        for(j = 0; j < mesF; j++) {
+            int qtdDias = 31;
+            if(j == 4 || j == 6 || j == 9 || j == 11)
+                qtdDias = 30;
+            else if(mesF == 2) {
+                qtdDias = 28;
+                if(ehAnoBissexto)
+                    qtdDias = 29;
+            }
+            totalDiasF += qtdDias;
+        }
+
+        totalDiasF += diaF;
         
         //calcule a distancia entre as datas
 
+        int distancia = totalDiasF - totalDiasI;
+        dma.qtdAnos = distancia / 365;
+        distancia = distancia % 365;
+        dma.qtdMeses = distancia / 30;
+        distancia = distancia % 30;
+        dma.qtdDias = distancia;
 
         //se tudo der certo
         dma.retorno = 1;
