@@ -12,17 +12,17 @@ void testQ5();
 void testQ6();
 
 int main(){
-    //pridntf("q1\n");
-    testQ1(); // 10 testes
-    //pridntf("q2\n");
-    // testQ2(); // 35 testes
-    //prindtf("q3\n");
-    // testQ3(); // 13 testes
-    //prdintf("q4\n");
+    //printf("q1\n");
+    // testQ1(); // 10 testes
+    //printf("q2\n");
+    testQ2(); // 35 testes
+    // printf("q3\n");
+    //testQ3(); // 13 testes
+    //printf("q4\n");
     // testQ4(); // 22 testes
-    //prdintf("q5\n");
+    //printf("q5\n");
     // testQ5(); // 10 testes
-    //prdintf("q6\n");
+    //printf("q6\n");
     // testQ6(); // 10 testes 
     
     
@@ -60,6 +60,7 @@ void testQ2(){
     int retorno;
 
     //teste 1
+    printf("\nTESTE 1\n");
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
@@ -73,6 +74,7 @@ void testQ2(){
     printf("%d\n", dma.qtdAnos == 1);
 
     //teste 2 - retornos
+    printf("\nTESTE 2\n");
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
@@ -93,6 +95,7 @@ void testQ2(){
     printf("%d\n",dma.retorno == 4);
 
     //teste 3
+    printf("\nTESTE 3\n");
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
@@ -106,6 +109,7 @@ void testQ2(){
     printf("%d\n",dma.qtdAnos == 0);
 
     //teste 4
+    printf("\nTESTE 4\n");
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
@@ -119,6 +123,7 @@ void testQ2(){
     printf("%d\n",dma.qtdAnos == 1);
 
     //teste 5
+    printf("\nTESTE 5\n");
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
@@ -132,6 +137,7 @@ void testQ2(){
     printf("%d\n",dma.qtdAnos == 0);
 
     //teste 6
+    printf("\nTESTE 6\n");
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
@@ -144,7 +150,8 @@ void testQ2(){
     printf("%d\n",dma.qtdMeses == 1);
     printf("%d\n",dma.qtdAnos == 0);
 
-    //teste 8
+    //teste 7
+    printf("\nTESTE 7\n");
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
@@ -157,7 +164,8 @@ void testQ2(){
     printf("%d\n",dma.qtdMeses == 0);
     printf("%d\n",dma.qtdAnos == 1);
 
-    //teste 9
+    //teste 8
+    printf("\nTESTE 8\n");
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
@@ -170,7 +178,8 @@ void testQ2(){
     printf("%d\n",dma.qtdMeses == 0);
     printf("%d\n",dma.qtdAnos == 1);
 
-    //teste 10
+    //teste 9
+    printf("\nTESTE 9\n");
     qtdDias = -1;
     qtdMeses = -1;
     qtdAnos = -1;
