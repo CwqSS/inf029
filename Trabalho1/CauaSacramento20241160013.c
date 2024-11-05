@@ -209,7 +209,7 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
         //verifique se a data final não é menor que a data inicial
         int diaI = 0, mesI = 0, anoI = 0, totalDiasI = 0;
         int diaF = 0, mesF = 0, anoF = 0, totalDiasF = 0;
-        int i, j, qtdCaracteres, ehAnoBissexto;
+        int i, j, qtdCaracteres, ehAnoBissextoI, ehAnoBissextoF;
 
         for(i = 0; datainicial[i] != '/'; i++) {
             diaI = diaI * 10 + datainicial[i] - '0';
@@ -264,10 +264,10 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
             totalDiasI += qtdDias;
         }
 
-        ehAnoBissexto = 0;
+        ehAnoBissextoI = 0;
         if(anoI % 4 == 0) {
             if(anoI % 100 != 0 || anoI % 400 == 0) {
-                ehAnoBissexto = 1;
+                ehAnoBissextoI = 1;
             }
         }
 
@@ -275,9 +275,9 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
             int qtdDias = 31;
             if(j == 4 || j == 6 || j == 9 || j == 11)
                 qtdDias = 30;
-            else if(mesI == 2) {
+            else if(j == 2) {
                 qtdDias = 28;
-                if(ehAnoBissexto)
+                if(ehAnoBissextoI)
                     qtdDias = 29;
             }
             totalDiasI += qtdDias;
@@ -296,10 +296,10 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
             totalDiasF += qtdDias;
         }
 
-        ehAnoBissexto = 0;
+        ehAnoBissextoF = 0;
         if(anoF % 4 == 0) {
             if(anoF % 100 != 0 || anoF % 400 == 0) {
-                ehAnoBissexto = 1;
+                ehAnoBissextoF = 1;
             }
         }
 
@@ -307,9 +307,9 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
             int qtdDias = 31;
             if(j == 4 || j == 6 || j == 9 || j == 11)
                 qtdDias = 30;
-            else if(mesF == 2) {
+            else if(j == 2) {
                 qtdDias = 28;
-                if(ehAnoBissexto)
+                if(ehAnoBissextoF)
                     qtdDias = 29;
             }
             totalDiasF += qtdDias;
@@ -318,13 +318,31 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
         totalDiasF += diaF;
         
         //calcule a distancia entre as datas
-
         int distancia = totalDiasF - totalDiasI;
+        dma.qtdAnos = 0;
+        dma.qtdMeses = 0;
+        dma.qtdDias = 0;
+
         dma.qtdAnos = distancia / 365;
         distancia = distancia % 365;
+
         dma.qtdMeses = distancia / 30;
         distancia = distancia % 30;
+
+        if(mesI == 1 || mesI == 3 || mesI == 5 || mesI == 7 || mesI == 8 || mesI == 10 || mesI == 12) {
+            if (dma.qtdMeses > 0 && distancia >= 0) {
+                dma.qtdMeses -= 1;
+                distancia += 30;
+                dma.qtdMeses = distancia / 31;
+                distancia = distancia % 31;
+            }
+        }
+        
         dma.qtdDias = distancia;
+
+        if(ehAnoBissextoI && dma.qtdAnos == 1 && dma.qtdDias >= 1) {
+            dma.qtdDias -= 1;
+        }
 
         //se tudo der certo
         dma.retorno = 1;
