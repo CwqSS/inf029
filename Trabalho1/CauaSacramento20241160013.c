@@ -508,7 +508,30 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-    int qtdOcorrencias;
+    int qtdOcorrencias = 0;
+    int qtdDigitos = 1;
+    int aux = numerobusca;
+
+    while(aux / 10 > 0) {
+        aux /= 10;
+        qtdDigitos += 1;
+    }
+
+    int moduloBusca = 1;
+    for(int i = 0; i < qtdDigitos; i++)
+        moduloBusca = moduloBusca * 10;
+
+    do {
+        int resto = numerobase % moduloBusca;
+        if(resto == numerobusca) {
+            qtdOcorrencias += 1;
+            numerobase = numerobase / moduloBusca;
+        }
+        else {
+            numerobase = numerobase / 10;
+        }
+    } while(numerobase > 0);
+
     return qtdOcorrencias;
 }
 #pragma endregion
