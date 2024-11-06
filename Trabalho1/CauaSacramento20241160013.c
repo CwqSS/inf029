@@ -362,10 +362,65 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
         Se isCaseSensitive != 1, a pesquisa não deve  considerar diferenças entre maiúsculos e minúsculos.
  @saida
     Um número n >= 0.
- */
+*/
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0;
+
+    for(int i = 0; texto[i]; i = i + 1) {
+        int c1 = texto[i];
+        int c2 = c;
+
+        // if(c1 == 'á' || c1 == 'à' || c1 == 'â' || c1 == 'ä' || c1 == 'ã') {
+        //     c1 = 'a';
+        // }
+        // else if (c1 == 'é' || c1 == 'è' || c1 == 'ê' || c1  == 'ë') {
+        //     c1 = 'e';
+        // }
+        // else if (c1 == 'í' || c1 == 'ì' || c1 == 'î' || c1 == 'ï') {
+        //     c1 = 'i'
+        // }
+        // else if(c1 == 'ó' || c1 == 'ò' || c1 == 'ô' || c1 == 'ö' || c1 == 'õ') {
+        //     c1 = 'o';
+        // }
+        // else if(c1 == 'ú' || c1 == 'ù' || c1 == 'û' || c1 == 'ü') {
+        //     c1 = 'u'
+        // }
+        // else if(c1 = 'ç') {
+        //     c1 = 'c';
+        // }
+        // else if(c1 == 'Á' || c1 == 'À' || c1 == 'Â' || c1 == 'Ä' || c1 == 'Ã') {
+        //     c1 = 'A';
+        // }
+        // else if (c1 == 'É' || c1 == 'È' || c1 == 'Ê' || c1  == 'Ë') {
+        //     c1 = 'E';
+        // }
+        // else if (c1 == 'Í' || c1 == 'Ì' || c1 == 'Î' || c1 == 'Ï') {
+        //     c1 = 'I'
+        // }
+        // else if(c1 == 'Ó' || c1 == 'Ò' || c1 == 'Ô' || c1 == 'Ö' || c1 == 'Õ') {
+        //     c1 = 'O';
+        // }
+        // else if(c1 == 'Ú' || c1 == 'Ù' || c1 == 'Û' || c1 == 'Ü') {
+        //     c1 = 'U'
+        // }
+        // else if(c1 = 'Ç') {
+        //     c1 = 'C';
+        // }
+
+        if(!isCaseSensitive) {
+            if(c1 >= 'a' && c1 <= 'z') {
+                c1 = c1 - 'a' + 'A';
+            }
+            if(c2 >= 'a' && c2 <= 'z') {
+                c2 = c2 - 'a' + 'A';
+            }
+        }
+
+        if(c1 == c2) {
+            qtdOcorrencias += 1;
+        }
+    }
 
     return qtdOcorrencias;
 }
