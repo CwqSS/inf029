@@ -483,6 +483,13 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
 int q5(int num)
 {
+    int aux = 0;
+
+    while(num > 0) {
+        aux = num % 10 + aux * 10;
+        num = num / 10;
+    }
+    num = aux;
 
     return num;
 }
