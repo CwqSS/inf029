@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#pragma region Header
 void iniciarTabuleiro(int tabuleiro[10][10]);
 void mostrarTabuleiro(int tabuleiro[10][10]);
 void mostrarTabuleiroInimigo(int tabuleiro[10][10]);
@@ -8,11 +9,13 @@ int validarEntrada(char entrada[], int validarSentido);
 int validarJogada(int tabuleiro[10][10], char entrada[], int tamBarco);
 int posicionarBarco(int tabuleiro[10][10], char entrada[], int tamBarco);
 void alocarTabuleiro(int tabuleiro[10][10], int qtdB1, int qtdB2, int qtdB3, int qtdB4);
+int existeBarco(int tabuleiro[10][10]);
 int opcoesJogador(int tabuleiroAtacante[10][10], int tabuleiroDefensor[10][10]);
 
 void limparTela();
 void limparBuffer();
 void esperarEnter();
+#pragma endregion
 
 int main() {
     int qtdB4 = 1;
@@ -21,8 +24,8 @@ int main() {
     int qtdB1 = 0;
 
     char iniciar = 0;
-    int lerInstrucoes = 1;
-    int somaJ1 = 0, somaJ2 =0;
+    char lerInstrucoes = '0';
+    int temBarcoJ1 = 1, temBarcoJ2 = 1;
 
     int tabuleiroJ1[10][10];
     int tabuleiroJ2[10][10];
@@ -32,7 +35,12 @@ int main() {
 
     limparTela();
 
-    if(lerInstrucoes) {
+    printf("Deseja ler as instrucoes? Se sim, digite 's'. Se nao, digite outra coisa.\n");
+    scanf(" %c", &lerInstrucoes);
+    limparBuffer();
+    limparTela();
+
+    if(lerInstrucoes == 's') {
         printf("INSTRUCOES");
         printf("\nO jogo eh jogado em turnos. Primeiro o jogador 1 aloca os barcos, depois o jogador 2.\n");
         printf("\nPara alocar o barco, informe a posicao inicial do seu barco e o sentido (ex: a2x, F4y).\n");
@@ -44,21 +52,22 @@ int main() {
         printf("\nLembre-se: voce pode atirar em um mesmo lugar mais de uma vez, logo, fique atento para nao cometer esse erro.\n");
         printf("\nBom jogo.\n");
         esperarEnter();
+        limparTela();
     }
-
-    limparTela();
 
     puts("JOGADOR 1, PRONTO?\n");
     esperarEnter();
     limparTela();
-
     alocarTabuleiro(tabuleiroJ1, qtdB1, qtdB2, qtdB3, qtdB4);
+    limparTela();
+
     
     puts("JOGADOR 2, PRONTO?\n");
     esperarEnter();
     limparTela();
-    
     alocarTabuleiro(tabuleiroJ2, qtdB1, qtdB2, qtdB3, qtdB4);
+    limparTela();
+    
 
     printf("\nTODOS OS BARCOS POSICIONADOS\n");
     esperarEnter();
@@ -71,20 +80,33 @@ int main() {
         printf("\nJOGADOR 1, FACA SUA JOGADA\n");
         esperarEnter();
         continuarJogando = opcoesJogador(tabuleiroJ1, tabuleiroJ2);
+        temBarcoJ2 = existeBarco(tabuleiroJ2);
         esperarEnter();
         
         limparTela();
 
-        if(continuarJogando){
+        if(continuarJogando && temBarcoJ2){
             printf("\nJOGADOR 2, FACA SUA JOGADA\n");
             esperarEnter();
             continuarJogando = opcoesJogador(tabuleiroJ2, tabuleiroJ1);
+            temBarcoJ1 = existeBarco(tabuleiroJ1);
             esperarEnter();
         }
-    } while(somaJ1 > 0 && somaJ2 > 0);
+    } while(temBarcoJ1 && temBarcoJ2 && continuarJogando);
 
+    if(!temBarcoJ2) {
+        printf("\nO jogador 1 ganhou este jogo!\n");
+    }
+    else if (!temBarcoJ1) {
+        printf("\nO jogador 2 ganhou este jogo!\n");
+    }
+
+    printf("\nEncerrando...\n");
+
+    esperarEnter();
 }
 
+#pragma region Implementação das funções
 void iniciarTabuleiro(int tabuleiro[10][10]) {
     for(int i = 0; i < 10; i++) {
         for(int j = 0; j < 10; j++) {
@@ -243,6 +265,10 @@ void alocarTabuleiro(int tabuleiro[10][10], int qtdB1, int qtdB2, int qtdB3, int
 
     char estouJogando;
 
+    limparTela();
+    mostrarTabuleiro(tabuleiro);
+    esperarEnter();
+
     do {
         limparTela();
 
@@ -250,7 +276,6 @@ void alocarTabuleiro(int tabuleiro[10][10], int qtdB1, int qtdB2, int qtdB3, int
         char entrada[5];
         estouJogando = '0';
 
-        mostrarTabuleiro(tabuleiro);
 
         printf("\nTamanho do barco: %d\n", tamBarco);
         printf("\nInforme a posicao inicial do seu barco e o sentido (ex: a2x, F4y): ");
@@ -262,7 +287,9 @@ void alocarTabuleiro(int tabuleiro[10][10], int qtdB1, int qtdB2, int qtdB3, int
 
         if(entradaValida && jogadaValida) {
             posicionarBarco(tabuleiro, entrada, tamBarco);
+            mostrarTabuleiro(tabuleiro);
             printf("\nBarco alocado com sucesso\n");
+            esperarEnter();
             barcosColocados += 1;
         }
         else 
@@ -315,7 +342,7 @@ int opcoesJogador(int tabuleiroAtacante[10][10], int tabuleiroDefensor[10][10]) 
         limparTela();
         opcao = '0';
         
-        printf("\t\nMenu\n");
+        printf("\nMenu\n");
         printf("0 - Atirar\n");
         printf("1 - Ver meu tabuleiro\n");
         printf("2 - Ver tabuleiro Inimigo\n");
@@ -325,12 +352,13 @@ int opcoesJogador(int tabuleiroAtacante[10][10], int tabuleiroDefensor[10][10]) 
         scanf(" %c", &opcao);
 
         limparBuffer();
+        limparTela();
 
         switch(opcao) {
             case '0': {
-                char entrada[3];
+                char entrada[4];
                 puts("Informe a posicao do ataque (ex: A1, B4): ");
-                fgets(entrada, 3, stdin);
+                fgets(entrada, 4, stdin);
                 if(validarEntrada(entrada, 0)) {
                     atacarPosicao(tabuleiroDefensor, entrada);
                     atirou = 1;
@@ -342,13 +370,13 @@ int opcoesJogador(int tabuleiroAtacante[10][10], int tabuleiroDefensor[10][10]) 
                 break;
             }
             case '1': {
-                printf("MEU TABULEIRO");
+                printf("\nMEU TABULEIRO\n");
                 mostrarTabuleiro(tabuleiroAtacante);
                 esperarEnter();
                 break;
             }
             case '2': {
-                printf("TABULEIRO INIMIGO");
+                printf("\nTABULEIRO INIMIGO\n");
                 mostrarTabuleiroInimigo(tabuleiroDefensor);
                 esperarEnter();
                 break;
@@ -370,11 +398,17 @@ int opcoesJogador(int tabuleiroAtacante[10][10], int tabuleiroDefensor[10][10]) 
     return atirou;
 }
 
-
-
-
-
-
+int existeBarco(int tabuleiro[10][10]) {
+    int temBarco = 0;
+    for(int i = 0; i < 10; i++) {
+        for(int j = 0; j < 10; j++) {
+            if(tabuleiro[i][j] == 1) {
+                temBarco = 1;
+            }
+        }
+    }
+    return temBarco;
+}
 
 void limparTela() {
     #ifdef _WIN32
@@ -398,3 +432,4 @@ void esperarEnter() {
         ch = getchar();
     } while(ch != 10);
 }
+#pragma endregion
