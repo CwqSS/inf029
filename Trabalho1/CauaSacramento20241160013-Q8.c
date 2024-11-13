@@ -18,9 +18,9 @@ void esperarEnter();
 #pragma endregion
 
 int main() {
-    int qtdB4 = 1;
+    int qtdB4 = 0;
     int qtdB3 = 0;
-    int qtdB2 = 0;
+    int qtdB2 = 2;
     int qtdB1 = 0;
 
     char iniciar = 0;
@@ -218,13 +218,11 @@ int validarJogada(int tabuleiro[10][10], char entrada[], int tamBarco) {
     coluna = entrada[1] - '0';
     sentido = entrada[2] - 'x';
 
-    if(sentido && linha + tamBarco - 1 > 10) {
+    if(sentido && linha + tamBarco - 1 >= 10) {
         jogadaValida = 0;
-        printf("%d : valor1", jogadaValida);
     }
-    else if (!sentido && coluna + tamBarco - 1 > 10) {
+    else if (!sentido && coluna + tamBarco - 1 >= 10) {
         jogadaValida = 0;
-        printf("%d : valor2", jogadaValida);
     }
 
     if(jogadaValida) {
@@ -261,7 +259,20 @@ int posicionarBarco(int tabuleiro[10][10], char entrada[], int tamBarco) {
 void alocarTabuleiro(int tabuleiro[10][10], int qtdB1, int qtdB2, int qtdB3, int qtdB4) {
     int totalBarcos = qtdB1 + qtdB2 + qtdB3 + qtdB4;
     int barcosColocados = 0;
-    int tamBarco = 4, qtdTrocas = 0;
+    int tamBarco, qtdTrocas = 0;
+
+    if(qtdB4 > 0) { 
+        tamBarco = 4;
+    }
+    else if(qtdB3 > 0) {
+        tamBarco = 3;
+    }
+    else if(qtdB2 > 0) {
+        tamBarco = 2;
+    }
+    else if(qtdB1 > 0) {
+        tamBarco = 1;
+    }
 
     char estouJogando;
 
@@ -291,6 +302,15 @@ void alocarTabuleiro(int tabuleiro[10][10], int qtdB1, int qtdB2, int qtdB3, int
             printf("\nBarco alocado com sucesso\n");
             esperarEnter();
             barcosColocados += 1;
+            if(barcosColocados == qtdB4) {
+                tamBarco = tamBarco - 1;
+            }
+            if(barcosColocados == qtdB4 + qtdB3) {
+                tamBarco = tamBarco - 1;
+            }
+            if(barcosColocados == qtdB4 + qtdB3 + qtdB2) {
+                tamBarco = tamBarco - 1;
+            }
         }
         else 
         {    
@@ -305,17 +325,6 @@ void alocarTabuleiro(int tabuleiro[10][10], int qtdB1, int qtdB2, int qtdB3, int
             else {
                 printf("\nJogada invalida!\n");
                 esperarEnter();
-            }
-        }
-        if(jogadaValida && entradaValida) {
-            if(barcosColocados == qtdB4) {
-                tamBarco = tamBarco - 1;
-            }
-            if(barcosColocados == qtdB4 + qtdB3) {
-                tamBarco = tamBarco - 1;
-            }
-            if(barcosColocados == qtdB4 + qtdB3 + qtdB2) {
-                tamBarco = tamBarco - 1;
             }
         }
     } while(barcosColocados < totalBarcos && estouJogando != 'n');
