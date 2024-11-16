@@ -323,26 +323,35 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
         dma.qtdMeses = 0;
         dma.qtdDias = 0;
 
-        dma.qtdAnos = distancia / 365;
-        distancia = distancia % 365;
-
-        dma.qtdMeses = distancia / 30;
-        distancia = distancia % 30;
+        int anos = 0;
+        int meses = 0;
+        int dias = 0;
+        
+        
+        if(((ehAnoBissextoI && mesI <= 2) || (ehAnoBissextoF && mesF <= 2)) && distancia >= 366) {
+            anos = 1;
+            distancia -= 366;
+        }
+        anos += distancia / 365;
+        distancia %= 365;
 
         if(mesI == 1 || mesI == 3 || mesI == 5 || mesI == 7 || mesI == 8 || mesI == 10 || mesI == 12) {
-            if (dma.qtdMeses > 0 && distancia >= 0) {
-                dma.qtdMeses -= 1;
-                distancia += 30;
-                dma.qtdMeses = distancia / 31;
-                distancia = distancia % 31;
-            }
+            meses = distancia / 31;
+            distancia %= 31;
         }
-        
-        dma.qtdDias = distancia;
+        else {
+            meses = distancia / 30;
+            distancia %= 30;
+        }
+        dias = distancia;
 
-        if(ehAnoBissextoI && dma.qtdAnos == 1 && dma.qtdDias >= 1) {
-            dma.qtdDias -= 1;
+        if(anos == 1 && dias == 1) {
+            dias = 0;
         }
+
+        dma.qtdAnos = anos;
+        dma.qtdMeses = meses;
+        dma.qtdDias = dias;
 
         //se tudo der certo
         dma.retorno = 1;
