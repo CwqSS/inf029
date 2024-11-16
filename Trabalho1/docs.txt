@@ -5,6 +5,10 @@ Comandos para compilar:
     - questão 7: gcc CauaSacramento20241160013-Q7.c -o nomeDoArquivo
     - questão 8: gcc CauaSacramento20241160013-Q8.c -o nomeDoArquivo
 
+Comando para executar:
+
+    - ./nomeDoArquivo
+
 O que eu deveria melhorar:
 
     - Modularização: Nas questões 1 a 6 há falta de modularização. Isto deve-se ao fato que achei que tinha que resolver as questões dentro do escopo de suas funções, sem usar recursos externos.
