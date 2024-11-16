@@ -1,0 +1,16 @@
+Comandos para compilar:
+
+    - questões 1 a 6 (corretor.c): gcc CauaSacramento20241160013.c corretor.c -o nomeDoArquivo  
+    - questões 1 a 6 (novoCorretor.c): gcc CauaSacramento20241160013.c novoCorretor.c -o nomeDoArquivo
+    - questão 7: gcc CauaSacramento20241160013-Q7.c -o nomeDoArquivo
+    - questão 8: gcc CauaSacramento20241160013-Q8.c -o nomeDoArquivo
+
+O que eu deveria melhorar:
+
+    - Modularização: Nas questões 1 a 6 há falta de modularização. Isto deve-se ao fato que achei que tinha que resolver as questões dentro do escopo de suas funções, sem usar recursos externos.
+    - Experiência do jogador: O fluxo de ações na questão 8, para mim, está terrível. Porém não estou afim de ajustá-lo agora.
+
+Em relação a erros:
+
+    - Se você me conhece e percebeu algum erro no código, por favor, me avise.
+
