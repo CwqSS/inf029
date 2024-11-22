@@ -380,43 +380,6 @@ int q3(char *texto, char c, int isCaseSensitive)
         int c1 = texto[i];
         int c2 = c;
 
-        // if(c1 == 'á' || c1 == 'à' || c1 == 'â' || c1 == 'ä' || c1 == 'ã') {
-        //     c1 = 'a';
-        // }
-        // else if (c1 == 'é' || c1 == 'è' || c1 == 'ê' || c1  == 'ë') {
-        //     c1 = 'e';
-        // }
-        // else if (c1 == 'í' || c1 == 'ì' || c1 == 'î' || c1 == 'ï') {
-        //     c1 = 'i'
-        // }
-        // else if(c1 == 'ó' || c1 == 'ò' || c1 == 'ô' || c1 == 'ö' || c1 == 'õ') {
-        //     c1 = 'o';
-        // }
-        // else if(c1 == 'ú' || c1 == 'ù' || c1 == 'û' || c1 == 'ü') {
-        //     c1 = 'u'
-        // }
-        // else if(c1 = 'ç') {
-        //     c1 = 'c';
-        // }
-        // else if(c1 == 'Á' || c1 == 'À' || c1 == 'Â' || c1 == 'Ä' || c1 == 'Ã') {
-        //     c1 = 'A';
-        // }
-        // else if (c1 == 'É' || c1 == 'È' || c1 == 'Ê' || c1  == 'Ë') {
-        //     c1 = 'E';
-        // }
-        // else if (c1 == 'Í' || c1 == 'Ì' || c1 == 'Î' || c1 == 'Ï') {
-        //     c1 = 'I'
-        // }
-        // else if(c1 == 'Ó' || c1 == 'Ò' || c1 == 'Ô' || c1 == 'Ö' || c1 == 'Õ') {
-        //     c1 = 'O';
-        // }
-        // else if(c1 == 'Ú' || c1 == 'Ù' || c1 == 'Û' || c1 == 'Ü') {
-        //     c1 = 'U'
-        // }
-        // else if(c1 = 'Ç') {
-        //     c1 = 'C';
-        // }
-
         if(!isCaseSensitive) {
             if(c1 >= 'a' && c1 <= 'z') {
                 c1 = c1 - 'a' + 'A';
@@ -454,10 +417,14 @@ int q3(char *texto, char c, int isCaseSensitive)
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
     int qtdOcorrencias = 0;
+    int qtdAcentos = 0;
     int indice = 0;
 
     for(int i = 0; strTexto[i]; i++) {
         int j = 0;
+        if(strTexto[i] < 0) {
+            qtdAcentos += 1;
+        }
         if(strTexto[i] == strBusca[j]) {
             int k = i;
             while(strTexto[k] == strBusca[j])  {
@@ -465,12 +432,12 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
                 j = j + 1;
             }
             if(strBusca[j] == '\0') {
-                posicoes[indice] = i + 1;
+                posicoes[indice] = i + 1 - qtdAcentos / 2;
                 indice += 1;
-                posicoes[indice] = k;
+                posicoes[indice] = k - qtdAcentos / 2;
                 indice += 1;
                 qtdOcorrencias += 1;
-                i += j - 1; 
+                i += j - 1 + qtdAcentos;
             }
         }
     }
