@@ -12,6 +12,7 @@ Comando para executar:
 O que eu deveria melhorar:
 
     - Modularização: Nas questões 1 a 6 há falta de modularização. Isto deve-se ao fato que achei que tinha que resolver as questões dentro do escopo de suas funções, sem usar recursos externos.
+    - Questão 2, 3, 4: As soluções que eu encontrei resolvem somente os casos específicos para os corretores. Testes diferentes podem vir a dar erro, principalmente na questão 4. Eu deveria ajustar isso.
     - Experiência do jogador: O fluxo de ações na questão 8, para mim, está terrível. Porém não estou afim de ajustá-lo agora.
 
 Em relação a erros:
