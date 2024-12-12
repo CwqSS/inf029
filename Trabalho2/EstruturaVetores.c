@@ -327,8 +327,45 @@ Rertono (int)
 */
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
 {
-
     int retorno = 0;
+
+    if(ehPosicaoValida(posicao) == POSICAO_INVALIDA)
+        retorno = POSICAO_INVALIDA;
+    else if(vetorPrincipal[posicao - 1] == NULL)
+        retorno = SEM_ESTRUTURA_AUXILIAR;
+    else if(vetorPrincipal[posicao - 1]->tamanho + novoTamanho < 1)
+        retorno = NOVO_TAMANHO_INVALIDO;
+    else
+    {
+        int tamanhoResultante = vetorPrincipal[posicao - 1]->tamanho + novoTamanho;
+        array * teste_0 = malloc(sizeof(array));
+        if(teste_0 != NULL)
+            teste_0->valores = malloc(sizeof(int) * tamanhoResultante);
+        if(teste_0 == NULL || teste_0->valores == NULL)
+            retorno = SEM_ESPACO_DE_MEMORIA;
+        free(teste_0);
+        free(teste_0->valores);
+    }
+
+    if(retorno == 0) {
+        array * old_array = vetorPrincipal[posicao - 1];
+        array * new_array = malloc(sizeof(array));
+        int tamanhoResultante = old_array->tamanho + novoTamanho;
+        new_array->valores = malloc(sizeof(int) * tamanhoResultante);
+        new_array->tamanho = tamanhoResultante;
+        copyIntArray(old_array->valores, new_array->valores, old_array->topo);
+        
+        if(tamanhoResultante >= old_array->tamanho)
+            new_array->topo = old_array->topo;
+        else
+            new_array->topo = old_array->topo + novoTamanho;
+        
+        free(old_array->valores);
+        free(old_array);
+
+        vetorPrincipal[posicao - 1] = new_array;
+        retorno = SUCESSO;
+    }
     return retorno;
 }
 
