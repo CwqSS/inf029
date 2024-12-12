@@ -4,7 +4,7 @@
 
 #include "EstruturaVetores.h"
 
-int vetorPrincipal[TAM];
+array * vetorPrincipal[TAM];
 
 /*
 Objetivo: criar estrutura auxiliar na posição 'posicao'.
