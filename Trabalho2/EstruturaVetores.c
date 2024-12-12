@@ -132,6 +132,19 @@ Rertono (int)
 int excluirNumeroDoFinaldaEstrutura(int posicao)
 {
     int retorno = SUCESSO;
+    int indice = posicao - 1;
+    array * aux = vetorPrincipal[indice];
+
+    if(indice < 0 || indice > 9)
+        retorno = POSICAO_INVALIDA;
+    else if(aux == NULL)
+        retorno = SEM_ESTRUTURA_AUXILIAR;
+    else if(aux->topo == 0)
+        retorno = ESTRUTURA_AUXILIAR_VAZIA;
+    else
+    {
+        aux->topo = aux->topo - 1;
+    }
     return retorno;
 }
 
