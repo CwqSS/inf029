@@ -19,18 +19,48 @@ Rertono (int)
 */
 int criarEstruturaAuxiliar(int posicao, int tamanho)
 {
-
     int retorno = 0;
+    int sem_espaco;
+    int sem_espaco_array;
+    int indice = posicao - 1;
+
     // a posicao pode já existir estrutura auxiliar
-    retorno = JA_TEM_ESTRUTURA_AUXILIAR;
-    // se posição é um valor válido {entre 1 e 10}
-    retorno = POSICAO_INVALIDA;
-    // o tamanho ser muito grande
-    retorno = SEM_ESPACO_DE_MEMORIA;
+    if(vetorPrincipal[indice] != NULL)
+    {
+        retorno = JA_TEM_ESTRUTURA_AUXILIAR;
+    }
+    // se posição é um valor inválido {entre 1 e 10}
+    else if(indice < 0 || indice > 9)
+    {
+        retorno = POSICAO_INVALIDA;
+    }
     // o tamanho nao pode ser menor que 1
-    retorno = TAMANHO_INVALIDO;
+    else if(tamanho < 1)
+    {
+        retorno = TAMANHO_INVALIDO;
+    }
+    // o tamanho ser muito grande
+    else 
+    {
+        array * teste_0 = malloc(sizeof(array));
+        
+        if(teste_0 != NULL)
+            teste_0->valores = malloc(sizeof(int) * tamanho);
+        if(teste_0 == NULL || teste_0->valores == NULL)
+            retorno = SEM_ESPACO_DE_MEMORIA;
+        free(teste_0);
+        free(teste_0->valores);
+    }
     // deu tudo certo, crie
-    retorno = SUCESSO;
+    if (retorno == 0)
+    {
+        array * nova_estrutura = malloc(sizeof(array));
+        nova_estrutura->valores = malloc(sizeof(int) * tamanho);
+        nova_estrutura->tamanho = tamanho;
+        nova_estrutura->topo = 0;
+        vetorPrincipal[indice] = nova_estrutura;
+        retorno = -1;
+    }
 
     return retorno;
 }
