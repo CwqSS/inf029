@@ -265,8 +265,28 @@ Rertono (int)
 */
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
-
     int retorno = 0;
+    int qtdValores = 0;
+    for(int i = 0; i < TAM; i++) {
+        if(vetorPrincipal[i] != NULL) {
+            qtdValores = qtdValores + vetorPrincipal[i]->topo;
+        }
+    }
+    if(qtdValores == 0) {
+        retorno = TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+    }
+    else {
+        int k = 0;
+        for(int i = 0; i < TAM; i++) {
+            array * aux = vetorPrincipal[i];
+            if(aux != NULL) {
+                for(int j = 0; j < aux->topo; j++)
+                    vetorAux[k++] = aux->valores[j];
+            }
+        }
+        retorno = SUCESSO;
+    }
+
     return retorno;
 }
 
@@ -280,8 +300,17 @@ Rertono (int)
 */
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
-
     int retorno = 0;
+    int qtdValores = 0;
+    retorno = getDadosDeTodasEstruturasAuxiliares(vetorAux);
+    if(retorno == SUCESSO) {
+        for(int i = 0; i < TAM; i++) {
+            if(vetorPrincipal[i] != NULL) {
+                qtdValores += vetorPrincipal[i]->topo;
+            }
+        }
+        insertion_sort(vetorAux, qtdValores);
+    }
     return retorno;
 }
 
