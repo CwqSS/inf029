@@ -217,8 +217,19 @@ Retorno (int)
 */
 int getDadosEstruturaAuxiliar(int posicao, int vetorAux[])
 {
-
     int retorno = 0;
+    int indice = posicao - 1;
+    array * aux = vetorPrincipal[indice];
+
+    if(indice < 0 || indice > 9)
+        retorno = POSICAO_INVALIDA;
+    else if(aux == NULL)
+        retorno = SEM_ESTRUTURA_AUXILIAR;
+    else {
+        for(int i = 0; i < aux->topo; i++)
+            vetorAux[i] = aux->valores[i];
+        retorno = SUCESSO;
+    }
 
     return retorno;
 }
@@ -234,9 +245,12 @@ Rertono (int)
 */
 int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[])
 {
-
     int retorno = 0;
-
+    retorno = getDadosEstruturaAuxiliar(posicao, vetorAux);
+    if(retorno == SUCESSO) {
+        array * aux = vetorPrincipal[posicao - 1];
+        insertion_sort(vetorAux, aux->topo);
+    }
     
     return retorno;
 }
