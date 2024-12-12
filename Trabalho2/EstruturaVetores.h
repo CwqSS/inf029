@@ -14,6 +14,12 @@ typedef struct reg {
     struct reg *prox;
 } No;
 
+typedef struct array {
+    int * valores;
+    int tamanho;
+    int topo;
+} array;
+
 int criarEstruturaAuxiliar(int posicao, int tamanho);
 int inserirNumeroEmEstrutura(int posicao, int valor);
 int excluirNumeroDoFinaldaEstrutura(int posicao);
@@ -30,6 +36,8 @@ void destruirListaEncadeadaComCabecote(No **inicio);
 
 void inicializar();
 void finalizar();
+void insertion_sort(int * vetorAux, int size);
+void copyIntArray(int * arrayP, int * arrayS, int size);
 void dobrar(int *x);
 
 #endif  // TRABALHO2_ESTRUTURAVETORES_H
