@@ -380,9 +380,16 @@ Retorno (int)
 */
 int getQuantidadeElementosEstruturaAuxiliar(int posicao)
 {
-
     int retorno = 0;
 
+    if(ehPosicaoValida(posicao) == POSICAO_INVALIDA)
+        retorno = POSICAO_INVALIDA;
+    else if(vetorPrincipal[posicao - 1] == NULL)
+        retorno = SEM_ESTRUTURA_AUXILIAR;
+    else if(vetorPrincipal[posicao - 1]->topo == 0)
+        retorno = ESTRUTURA_AUXILIAR_VAZIA;
+    else
+        retorno = vetorPrincipal[posicao - 1]->topo;
     return retorno;
 }
 
