@@ -164,6 +164,32 @@ Rertono (int)
 int excluirNumeroEspecificoDeEstrutura(int posicao, int valor)
 {
     int retorno = SUCESSO;
+    int indice = posicao - 1;
+    array * aux = vetorPrincipal[indice];
+
+    if(indice < 0 || indice > 9)
+        retorno = POSICAO_INVALIDA;
+    else if(aux == NULL)
+        retorno = SEM_ESTRUTURA_AUXILIAR;
+    else if(aux->topo == 0)
+        retorno = ESTRUTURA_AUXILIAR_VAZIA;
+    else {
+        int achou = 0;
+        int index = -1;
+        for(int i = 0; i < aux->topo && !achou; i++)
+            if(valor == aux->valores[i]) {
+                achou = 1;
+                index = i;
+            }
+        if(!achou){
+            retorno = NUMERO_INEXISTENTE;
+        }
+        else {
+            for(int i = index; i < aux->topo - 1; i++)
+                aux->valores[i] = aux->valores[i + 1];
+            aux->topo = aux->topo - 1;
+        }
+    }
     return retorno;
 }
 
