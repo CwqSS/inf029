@@ -450,4 +450,20 @@ void finalizar()
         free(vetorPrincipal[i]->valores);
     }
 }
+
+void insertion_sort(int * vetorAux, int size) {
+    for(int j = 1; j < size; j++) {
+            int i = j - 1;
+            int key = vetorAux[j];
+            while(i > -1 && vetorAux[i] > key) {
+                vetorAux[i + 1] = vetorAux[i];
+                i = i - 1;
+            }
+            vetorAux[i + 1] = key;
+        }
+}
+
+void copyIntArray(int * arrayP, int * arrayS, int size) {
+    for(int i = 0; i < size; i++)
+        arrayS[i] = arrayP[i];
 }
