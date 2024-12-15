@@ -357,7 +357,7 @@ int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
         
         if(tamanhoResultante >= old_array->tamanho)
             new_array->topo = old_array->topo;
-        else
+        else if(tamanhoResultante < old_array->topo)
             new_array->topo = old_array->topo + novoTamanho;
         
         free(old_array->valores);
