@@ -402,8 +402,34 @@ Retorno (No*)
 */
 No *montarListaEncadeadaComCabecote()
 {
+    No * head = malloc(sizeof(No));
+    head->prox = NULL;
 
-    return NULL;
+    for(int i = 0; i < TAM; i++)
+    {
+        if(vetorPrincipal[i] != NULL)
+        {
+            for(int j = 0; j < vetorPrincipal[i]->topo; j++)
+            {
+                No * new = malloc(sizeof(No));
+                new->conteudo = vetorPrincipal[i]->valores[j];
+                new->prox = NULL;
+
+                if(head->prox == NULL)
+                {
+                    head->prox = new;
+                }
+                else
+                {
+                    No * last = head;
+                    while(last->prox != NULL) last = last->prox;
+                    last->prox = new;
+                }
+            }
+        }
+    }
+
+    return head;
 }
 
 /*
@@ -412,6 +438,14 @@ Retorno void
 */
 void getDadosListaEncadeadaComCabecote(No *inicio, int vetorAux[])
 {
+    No * last = inicio->prox;
+    int i = 0;
+    while(last != NULL)
+    {
+        vetorAux[i] = last->conteudo;
+        last = last->prox;
+        i = i + 1;  
+    }
 }
 
 /*
@@ -423,6 +457,13 @@ Retorno
 */
 void destruirListaEncadeadaComCabecote(No **inicio)
 {
+    while(*inicio != NULL)
+    {
+        No * ant = *inicio;
+        (*inicio) = (*inicio)->prox;
+        free(ant);
+    }
+    *inicio = NULL;
 }
 
 /*
