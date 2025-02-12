@@ -477,10 +477,45 @@ Objetivo: inicializa o programa. deve ser chamado ao inicio do programa
 
 void inicializar()
 {
-    for(int i = 0; i < TAM; i++)
-    {
-        vetorPrincipal[i] = NULL;
+    FILE * fp;
+    int i;
+
+    fp = fopen("db.txt", "r");
+
+    for(i = 0; i < TAM; i++)
+            vetorPrincipal[i] = NULL;
+
+    if(fp == NULL) 
+        return;
+
+    int posicao, tamanho, topo;
+    int numeroNaLinha;
+
+    // Estava usando feof(fp) como condição de parada, mas não estava funcionando para leitura (ele lia uma vez a mais do deveria ler)
+    // Não entendendo o motivo, perguntei ao GPT o erro, e ele disse que era o fato de que o feof() só pararia quando chegasse ao final,
+    // mas que no arquivo provalvelmente não estava chegando.
+
+    // Apesar dos pesares, a verificação foi sugerida pelo chat GPT, e eu a adotei. Não havia pensado nessa forma antes.
+    while(fscanf(fp, "%d %d %d", &posicao, &tamanho, &topo) == 3) {
+        // printf("\nSeção %d completa\n", posicao);
+        // printf("posicao: %d tamanho: %d topo: %d valores: ", posicao, tamanho, topo);
+
+        array * estrutura = malloc(sizeof(array));
+        estrutura->valores = malloc(sizeof(int) * tamanho);
+
+        for(i = 0; i < topo; i++) {
+            fscanf(fp,"%d ", &numeroNaLinha);
+            estrutura->valores[i] = numeroNaLinha;
+            // printf("%d ", numeroNaLinha);
+        }
+        // printf("\n");
+        
+        estrutura->tamanho = tamanho;
+        estrutura->topo = topo;
+        vetorPrincipal[posicao] = estrutura;
     }
+
+    fclose(fp);
 }
 
 /*
@@ -491,6 +526,28 @@ para poder liberar todos os espaços de memória das estruturas auxiliares.
 
 void finalizar()
 {
+    FILE * fp = fopen("db.txt", "w");
+
+
+    // Dado que não é explícito que trabalhamos com pilha,
+    // irei acessar todos os valores do array independentemente do topo.
+
+    array * atual;
+
+    for(int i = 0; i < 10; i++) {
+        if(vetorPrincipal[i] != NULL) {
+            atual = vetorPrincipal[i];
+            fprintf(fp, "%d ", i);
+            fprintf(fp, "%d ", atual->tamanho);
+            fprintf(fp, "%d ", atual->topo);
+            for(int j = 0; j < atual->topo; j++) {
+                fprintf(fp, "%d ", atual->valores[j]);
+            }
+            fprintf(fp, "\n");
+        }
+    }
+
+
     for(int i = 0; i < TAM; i++) {
         if(vetorPrincipal[i] != NULL)
             free(vetorPrincipal[i]->valores);
