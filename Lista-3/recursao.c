@@ -52,7 +52,7 @@ void inverteVetorInteiro_recursivo(int * vetor, int tam) {
 //     if(y == 0) 
 //         return x;
 //     else return mdc_recursivo(y, x % y);
-// }
+// }'
 
 int main() {
 
